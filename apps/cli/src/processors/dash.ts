@@ -22,7 +22,7 @@ export const dash = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName,
         command.setStartTime(10).duration(sampleTime)
     }
 
-    const segmentFileName = resolution ? `${destDir}/${fileBaseName}_${resolution}.ts` : `${destDir}/${fileBaseName}.ts`
+    const segmentFileName = resolution ? `${destDir}/${fileBaseName}_${resolution}_%03d.ts` : `${destDir}/${fileBaseName}_%03d.ts`
     const outputName = resolution ? `${destDir}/${fileBaseName}_${resolution}.mpd` : `${destDir}/${fileBaseName}.mpd`
     command
         .addOption("-seg_duration", "10") // this splits up the hls into 10min chunks
