@@ -12,8 +12,8 @@ interface Params {
     bitRate: string // ex 500k
 }
 
-export const mp4 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, resolution, bitRate }: Params) => {
-    const command = Ffmpeg(sourcePath).videoCodec("libx264").audioCodec("aac").format("segment")
+export const vp9 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, resolution, bitRate }: Params) => {
+    const command = Ffmpeg(sourcePath).videoCodec("libvpx-vp9").audioCodec("libvorbis").format("segment")
     if (resolution) {
         command.size(`${resolution}x?`)
     }
@@ -25,12 +25,14 @@ export const mp4 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
     }
 
     const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'm3u8')
-    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'ts', true)
+    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'webm', true)
+
     command
-        .videoBitrate(bitRate)
+        .videoBitrate(0)
+        .addOption("-crf", "30")
         .addOption("-segment_time", "10") // this splits up the hls into 10min chunks
         .addOption("-segment_list", segmentFileName)
-        .addOption("-segment_format", "mpegts")
+        .addOption("-segment_format", "webm")
         .output(outputName)
     await addHandlers(command)
 }

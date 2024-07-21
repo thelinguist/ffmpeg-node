@@ -1,8 +1,8 @@
 import { prepareFolders } from "../../utils/prepareFolders"
 import { dash } from "../../processors"
-import { AutoFfmpegSubCommand } from "../helpers"
+import { wrapper } from "../helpers"
 
-export const createDash: AutoFfmpegSubCommand = async (parsed, options) => {
+export const createDash = wrapper(async (parsed, options) => {
     const destDir = await prepareFolders(parsed, "dash")
 
     await dash({
@@ -23,4 +23,4 @@ export const createDash: AutoFfmpegSubCommand = async (parsed, options) => {
         })
     }
     return destDir
-}
+})

@@ -1,8 +1,8 @@
 import { hls } from "../../processors"
 import { prepareFolders } from "../../utils/prepareFolders"
-import { AutoFfmpegSubCommand } from "../helpers"
+import { wrapper } from "../helpers"
 
-export const createHLS:AutoFfmpegSubCommand = async (parsed, options) => {
+export const createHLS = wrapper(async (parsed, options) => {
     const hlsDir = await prepareFolders(parsed, "hls")
 
     await hls({
@@ -23,4 +23,4 @@ export const createHLS:AutoFfmpegSubCommand = async (parsed, options) => {
         })
     }
     return hlsDir
-}
+})

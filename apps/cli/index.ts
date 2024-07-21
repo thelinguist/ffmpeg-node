@@ -3,8 +3,8 @@
 import { Command } from "commander"
 import packageJson from "../../package.json"
 import { createHLS, createAll, createDash, createMp4 } from "./src/actions"
-import { wrapper } from "./src/actions/helpers"
 import { printTitle } from "./src/utils/printTitle"
+import { createVP9 } from "./src/actions/createVP9"
 
 class MyRootCommand extends Command {
     createCommand(name) {
@@ -27,9 +27,10 @@ class MyRootCommand extends Command {
 
 const program = new MyRootCommand()
 
-program.command("hls").description("do an hls conversion").action(wrapper(createHLS))
-program.command("dash").description("do a dash conversion").action(wrapper(createDash))
-program.command("mp4").description("do an mp4 conversion").action(wrapper(createMp4))
+program.command("hls").description("do an hls conversion").action(createHLS)
+program.command("dash").description("do a dash conversion").action(createDash)
+program.command("mp4").description("do an mp4 conversion").action(createMp4)
+program.command("vp9").description("do an vp9 conversion").action(createVP9)
 program
     .command("all")
     .description("do all the conversions!")

@@ -1,12 +1,12 @@
 import { prepareFolders } from "../../utils/prepareFolders"
-import { mp4 } from "../../processors"
 import { wrapper } from "../helpers"
+import { vp9 } from "../../processors"
 
-export const createMp4 = wrapper(async (parsed, options) => {
-    const destDir = await prepareFolders(parsed, "mp4")
+export const createVP9 = wrapper(async (parsed, options) => {
+    const destDir = await prepareFolders(parsed, "vp9")
 
     const resolutions = options.resolutions ?? [undefined, 720]
-    const bitRates = options.bitRates ?? ["500k", "1000k", "2000k", "4000k"]
+    const bitRates = options.bitRates ?? [undefined]
 
     let counter = 0
     for (const resolution of resolutions) {
@@ -14,7 +14,7 @@ export const createMp4 = wrapper(async (parsed, options) => {
             if (counter > 0 && options.oneConversion) {
                 break
             }
-            await mp4({
+            await vp9({
                 resolution,
                 bitRate,
                 sourcePath: parsed.fullPath,

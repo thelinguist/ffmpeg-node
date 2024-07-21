@@ -1,4 +1,5 @@
 import Ffmpeg from "fluent-ffmpeg"
+import { getSegmentName } from "./fileNames"
 import { addHandlers } from "./addHandlers"
 
 interface Params {
@@ -22,8 +23,8 @@ export const dash = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName,
         command.setStartTime(10).duration(sampleTime)
     }
 
-    const segmentFileName = resolution ? `${destDir}/${fileBaseName}_${resolution}_%03d.ts` : `${destDir}/${fileBaseName}_%03d.ts`
-    const outputName = resolution ? `${destDir}/${fileBaseName}_${resolution}.mpd` : `${destDir}/${fileBaseName}.mpd`
+    const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, undefined, "ts", true)
+    const outputName = getSegmentName(destDir, fileBaseName, resolution, undefined, "mpd", false)
     command
         .addOption("-seg_duration", "10") // this splits up the hls into 10min chunks
         .addOption("-window_size", "5")
