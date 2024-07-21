@@ -8,7 +8,7 @@
         "node": ">=20"
     },
     "scripts": {
-        "test:docs": "npx ts-node ./index.ts hls file.mp4",
+        "demo": "npx ts-node ./index.ts hls $MOVIE",
         "compile": "rm -rf dist && tsc --build",
         "build": "pnpm run compile && pkg dist/index.js -c package.json && pnpm run sign:mac",
         "sign:mac": "codesign -fs Noctiluma dist/auto-ffmpeg-macos-arm64 && codesign -fs Noctiluma dist/auto-ffmpeg-macos-x64",
@@ -25,6 +25,7 @@
     "devDependencies": {
         "@tsconfig/node20": "20.1.4",
         "@types/node": "^20.14.11",
+        "@types/fluent-ffmpeg": "^2.1.24",
         "pkg": "^5.8.1",
         "prettier": "^3.0.3",
         "ts-node": "^10.9.1",
