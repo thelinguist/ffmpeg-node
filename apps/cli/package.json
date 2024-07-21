@@ -8,7 +8,7 @@
         "node": ">=20"
     },
     "scripts": {
-        "demo": "npx ts-node ./index.ts hls $MOVIE",
+        "demo": "npx ts-node ./index.ts all $MOVIE -o -s 15",
         "compile": "rm -rf dist && tsc --build",
         "build": "pnpm run compile && pkg dist/index.js -c package.json && pnpm run sign:mac",
         "sign:mac": "codesign -fs Noctiluma dist/auto-ffmpeg-macos-arm64 && codesign -fs Noctiluma dist/auto-ffmpeg-macos-x64",

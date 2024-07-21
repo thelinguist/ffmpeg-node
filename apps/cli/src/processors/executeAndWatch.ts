@@ -1,7 +1,7 @@
 import { ProgressEvent } from "../types/ffmpeg"
 import { FfmpegCommand } from "fluent-ffmpeg"
 
-export const addHandlers = (command: FfmpegCommand) => {
+export const executeAndWatch = (command: FfmpegCommand) => {
     return new Promise((resolve, reject) => {
         command.addListener("progress", (event: ProgressEvent) => {
             console.clear()

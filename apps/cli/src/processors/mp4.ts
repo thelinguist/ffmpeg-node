@@ -1,5 +1,5 @@
 import Ffmpeg from "fluent-ffmpeg"
-import { addHandlers } from "./addHandlers"
+import { executeAndWatch } from "./executeAndWatch"
 import { getSegmentName } from "./fileNames"
 
 interface Params {
@@ -32,5 +32,5 @@ export const mp4 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
         .addOption("-segment_list", segmentFileName)
         .addOption("-segment_format", "mpegts")
         .output(outputName)
-    await addHandlers(command)
+    await executeAndWatch(command)
 }

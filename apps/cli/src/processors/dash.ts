@@ -1,6 +1,6 @@
 import Ffmpeg from "fluent-ffmpeg"
 import { getSegmentName } from "./fileNames"
-import { addHandlers } from "./addHandlers"
+import { executeAndWatch } from "./executeAndWatch"
 
 interface Params {
     sourcePath: string
@@ -31,6 +31,6 @@ export const dash = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName,
         // .addOption("-extra-window_size", "5")
         .addOption("-hls_segment_filename", segmentFileName)
         .output(outputName)
-    await addHandlers(command)
+    await executeAndWatch(command)
     return destDir
 }

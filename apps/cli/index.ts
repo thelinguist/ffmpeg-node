@@ -2,7 +2,7 @@
 
 import { Command } from "commander"
 import packageJson from "../../package.json"
-import { createHLS, createAll, createDash, createMp4, createH265, createVP9 } from "./src/actions"
+import { createHLS, createAll, createDash, createMp4, createH265, createVP9, createPoster } from "./src/actions"
 import { printTitle } from "./src/utils/printTitle"
 
 class MyRootCommand extends Command {
@@ -26,6 +26,7 @@ class MyRootCommand extends Command {
 
 const program = new MyRootCommand()
 
+program.command("poster").description("create a poster graphic").action(createPoster)
 program.command("hls").description("do an hls conversion").action(createHLS)
 program.command("dash").description("do a dash conversion").action(createDash)
 program.command("mp4").description("do an mp4 conversion").action(createMp4)

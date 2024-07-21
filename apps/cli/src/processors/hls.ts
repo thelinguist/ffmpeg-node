@@ -1,5 +1,5 @@
 import Ffmpeg from "fluent-ffmpeg"
-import { addHandlers } from "./addHandlers"
+import { executeAndWatch } from "./executeAndWatch"
 
 interface Params {
     sourcePath: string
@@ -31,5 +31,5 @@ export const hls = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
         .addOption("-hls_list_size", "0")
         .addOption("-hls_segment_filename", segmentFileName)
         .output(outputName)
-    await addHandlers(command)
+    await executeAndWatch(command)
 }
