@@ -1,26 +1,26 @@
-import { hls } from "../../processors"
 import { prepareFolders } from "../../utils/prepareFolders"
+import { dash } from "../../processors"
 import { AutoFfmpegSubCommand } from "../helpers"
 
-export const createHLS:AutoFfmpegSubCommand = async (parsed, options) => {
-    const hlsDir = await prepareFolders(parsed, "hls")
+export const createDash: AutoFfmpegSubCommand = async (parsed, options) => {
+    const destDir = await prepareFolders(parsed, "dash")
 
-    await hls({
+    await dash({
         sourcePath: parsed.fullPath,
         fps: options.fpsOverride,
-        destDir: hlsDir,
+        destDir,
         fileBaseName: parsed.baseName,
         sampleTime: options.sampleTime,
     })
     if (!options.oneConversion) {
-        await hls({
+        await dash({
             resolution: 720,
             sourcePath: parsed.fullPath,
             fps: options.fpsOverride,
-            destDir: hlsDir,
+            destDir,
             fileBaseName: parsed.baseName,
             sampleTime: options.sampleTime,
         })
     }
-    return hlsDir
+    return destDir
 }

@@ -1,4 +1,4 @@
-import * as path from 'path'
+import * as path from "path"
 
 export interface FileParts {
     /**
@@ -34,11 +34,11 @@ export const parseFileInput = (inputFile: string): FileParts => {
     const parsed = path.parse(realPath)
     const { ext } = parsed
     return {
-        basePath: parsed.dir || '.',
+        basePath: parsed.dir || ".",
         baseName: parsed.name,
         fileName: parsed.base,
         ext: ext,
-        fileNameAndPath:[parsed.dir,parsed.base].join('/'),
+        fileNameAndPath: [parsed.dir, parsed.base].join("/"),
         fullPath: realPath,
     }
 }

@@ -15,5 +15,5 @@
         "outDir": "dist",
         "baseUrl": "src",
         "rootDir": "./"
-    },
+    }
 }
