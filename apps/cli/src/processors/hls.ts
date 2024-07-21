@@ -22,13 +22,12 @@ export const hls = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
         command.setStartTime(10).duration(sampleTime)
     }
 
-    const segmentFileName = resolution ? `${destDir}/${fileBaseName}_${resolution}.ts` : `${destDir}/${fileBaseName}.ts`
+    const segmentFileName = resolution ? `${destDir}/${fileBaseName}_${resolution}-%d.ts` : `${destDir}/${fileBaseName}-%d.ts`
     const outputName = resolution ? `${destDir}/${fileBaseName}_${resolution}.m3u8` : `${destDir}/${fileBaseName}.m3u8`
     command
-        .addOption("-hls_time", "10") // this splits up the hls into 10min chunks
+        .addOption("-hls_time", "10") // this splits up the hls into 10 second chunks
         .addOption("-hls_list_size", "0")
         .addOption("-hls_segment_filename", segmentFileName)
-        .addOption("-strftime", "1")
         .output(outputName)
     await addHandlers(command)
 }
