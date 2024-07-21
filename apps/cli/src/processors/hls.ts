@@ -22,7 +22,9 @@ export const hls = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
         command.setStartTime(10).duration(sampleTime)
     }
 
-    const segmentFileName = resolution ? `${destDir}/${fileBaseName}_${resolution}-%d.ts` : `${destDir}/${fileBaseName}-%d.ts`
+    const segmentFileName = resolution
+        ? `${destDir}/${fileBaseName}_${resolution}-%d.ts`
+        : `${destDir}/${fileBaseName}-%d.ts`
     const outputName = resolution ? `${destDir}/${fileBaseName}_${resolution}.m3u8` : `${destDir}/${fileBaseName}.m3u8`
     command
         .addOption("-hls_time", "10") // this splits up the hls into 10 second chunks

@@ -2,9 +2,8 @@
 
 import { Command } from "commander"
 import packageJson from "../../package.json"
-import { createHLS, createAll, createDash, createMp4 } from "./src/actions"
+import { createHLS, createAll, createDash, createMp4, createH265, createVP9 } from "./src/actions"
 import { printTitle } from "./src/utils/printTitle"
-import { createVP9 } from "./src/actions/createVP9"
 
 class MyRootCommand extends Command {
     createCommand(name) {
@@ -31,6 +30,7 @@ program.command("hls").description("do an hls conversion").action(createHLS)
 program.command("dash").description("do a dash conversion").action(createDash)
 program.command("mp4").description("do an mp4 conversion").action(createMp4)
 program.command("vp9").description("do an vp9 conversion").action(createVP9)
+program.command("h265").description("do an h265 conversion").action(createH265)
 program
     .command("all")
     .description("do all the conversions!")

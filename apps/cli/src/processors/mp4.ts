@@ -24,8 +24,8 @@ export const mp4 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
         command.setStartTime(10).duration(sampleTime)
     }
 
-    const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'm3u8')
-    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'ts', true)
+    const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, bitRate, "m3u8")
+    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, "ts", true)
     command
         .videoBitrate(bitRate)
         .addOption("-segment_time", "10") // this splits up the hls into 10min chunks

@@ -12,8 +12,8 @@ interface Params {
     bitRate: string // ex 500k
 }
 
-export const vp9 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, resolution, bitRate }: Params) => {
-    const command = Ffmpeg(sourcePath).videoCodec("libvpx-vp9").audioCodec("libvorbis").format("segment")
+export const h265 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, resolution, bitRate }: Params) => {
+    const command = Ffmpeg(sourcePath).videoCodec("libx265").audioCodec("aac").format("segment")
     if (resolution) {
         command.size(`${resolution}x?`)
     }
@@ -24,15 +24,15 @@ export const vp9 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
         command.setStartTime(10).duration(sampleTime)
     }
 
-    const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, bitRate, "m3u8")
-    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, "webm", true)
+    const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'm3u8')
+    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'ts', true)
 
     command
         .videoBitrate(0)
         .addOption("-crf", "30")
         .addOption("-segment_time", "10") // this splits up the hls into 10min chunks
         .addOption("-segment_list", segmentFileName)
-        .addOption("-segment_format", "webm")
+        .addOption("-segment_format", "mpegts")
         .output(outputName)
     await addHandlers(command)
 }
