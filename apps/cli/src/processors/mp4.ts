@@ -24,15 +24,26 @@ export const mp4 = async ({ sourcePath, fps, sampleTime, destDir, fileBaseName, 
     }
 
     const segmentFileName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'm3u8')
-    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'ts')
+    const outputName = getSegmentName(destDir, fileBaseName, resolution, bitRate, 'ts', true)
     command
         .videoBitrate(bitRate)
         .addOption("-segment_time", "10") // this splits up the hls into 10min chunks
         .addOption("-segment_list", segmentFileName)
+        .addOption("-segment_format", "mpegts")
         .output(outputName)
     await addHandlers(command)
 }
 
-const getSegmentName = (destDir, fileBaseName, resolution, bitRate, ext) => {
-    return `${destDir}/${fileBaseName}${resolution ? `_${resolution}` : ''}${bitRate ? `_${bitRate}` : ''}.${ext}`
+const getSegmentName = (destDir, fileBaseName, resolution, bitRate, ext, template = false) => {
+    let stringBuilder = `${destDir}/${fileBaseName}`
+    if (resolution) {
+        stringBuilder += `_${resolution}`
+    }
+    if (bitRate) {
+        stringBuilder += `_${bitRate}`
+    }
+    if (template) {
+        stringBuilder += '_%3d'
+    }
+    return `${stringBuilder}.${ext}`
 }
