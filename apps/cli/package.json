@@ -1,0 +1,48 @@
+{
+    "name": "auto-ffmpeg",
+    "main": "dist/index.js",
+    "bin": {
+        "auto-ffmpeg": "./dist/index.js"
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "test:docs": "npx ts-node ./index.ts hls file.mp4",
+        "compile": "rm -rf dist && tsc --build",
+        "build": "pnpm run compile && pkg dist/index.js -c package.json && pnpm run sign:mac",
+        "sign:mac": "codesign -fs Noctiluma dist/auto-ffmpeg-macos-arm64 && codesign -fs Noctiluma dist/auto-ffmpeg-macos-x64",
+        "test": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "format": "prettier . --write"
+    },
+    "dependencies": {
+        "commander": "^10.0.0",
+        "date-fns": "^2.29.3",
+        "figlet": "^1.5.2",
+        "fluent-ffmpeg": "^2.1.3"
+    },
+    "devDependencies": {
+        "@tsconfig/node20": "20.1.4",
+        "@types/node": "^20.14.11",
+        "pkg": "^5.8.1",
+        "prettier": "^3.0.3",
+        "ts-node": "^10.9.1",
+        "tsconfig": "workspace:*",
+        "typescript": "^5.5.3",
+        "vitest": "^2.0.3"
+    },
+    "pkg": {
+        "assets": [
+            "node_modules/figlet/fonts/*.flf"
+        ],
+        "targets": [
+            "node18-linux-x64",
+            "node18-linux-arm64",
+            "node18-macos-x64",
+            "node18-macos-arm64",
+            "node18-win-x64"
+        ],
+        "outputPath": "dist"
+    }
+}

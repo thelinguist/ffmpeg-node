@@ -1,0 +1,19 @@
+{
+    "extends": "tsconfig/base.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "lib": ["es2022", "dom"],
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "typeRoots": ["./node_modules/@types"],
+        "target": "ES2022",
+        "moduleResolution": "Node",
+        "strict": true,
+        "noImplicitAny": false,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "outDir": "dist",
+        "baseUrl": "src",
+        "rootDir": "./"
+    },
+}

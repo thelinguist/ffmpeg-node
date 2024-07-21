@@ -1,0 +1,45 @@
+{
+  "author": "Bryce Shelley",
+  "name": "ffmpeg-node",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "release": "pnpm dlx semantic-release"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/github",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ]
+        }
+      ]
+    ],
+    "branches": [
+      "master",
+      "main"
+    ]
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3",
+    "tsconfig": "workspace:*"
+  }
+}
