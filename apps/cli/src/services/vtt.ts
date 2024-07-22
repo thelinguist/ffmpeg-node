@@ -8,9 +8,10 @@ export const createVTTDocument = (filenames: string[], thumbnailIntervalSec, wid
 
     for (let i = 0; i < sortedFiles.length; i++) {
         const filename = sortedFiles[i]
-        const [fileStartTime] = filename.match(/\d+(.?\d+)?/g) as string[]
-        const startTime = secondsToTimecode(parseFloat(fileStartTime))
-        const endTime = secondsToTimecode(parseFloat(fileStartTime) + thumbnailIntervalSec)
+        const [fileStartTimeStr] = filename.match(/-\d+(.?\d+)?/g) as string[]
+        const fileStartTime = Math.abs(parseFloat(fileStartTimeStr))
+        const startTime = secondsToTimecode(fileStartTime)
+        const endTime = secondsToTimecode(fileStartTime + thumbnailIntervalSec)
         lines.push(`${startTime} --> ${endTime}`)
 
         const xCoordinate = width * (i % columns)
@@ -29,7 +30,7 @@ const sortFiles = filenames =>
     filenames
         .map(filename => path.basename(filename))
         .sort((fileA, fileB) => {
-            const [a] = fileA.match(/\d+(.?\d+)?/g) as string[]
-            const [b] = fileB.match(/\d+(.?\d+)?/g) as string[]
-            return parseFloat(a) - parseFloat(b)
+            const [a] = fileA.match(/\d+/g) as string[]
+            const [b] = fileB.match(/\d+/g) as string[]
+            return Math.abs(parseFloat(a)) - Math.abs(parseFloat(b))
         })

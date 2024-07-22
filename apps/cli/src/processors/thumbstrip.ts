@@ -12,6 +12,7 @@ interface Params {
     thumbnailColumns?: number
     thumbnailIntervalSec?: number
     skipThumbnails?: boolean
+    sampleTime?: number
 }
 
 const HEIGHT = 160
@@ -28,6 +29,7 @@ export const thumbstrip = async ({
     thumbnailColumns,
     thumbnailIntervalSec,
     skipThumbnails,
+    sampleTime,
 }: Params) => {
     const selHeight = height ?? HEIGHT
     const interval = thumbnailIntervalSec ?? THUMBNAIL_INTERVAL_SECONDS
@@ -44,14 +46,15 @@ export const thumbstrip = async ({
 
     let filenames
     if (skipThumbnails) {
+        console.log('skipping')
         const sourceFileGlob = `${destDir}/thumb*.png`
         filenames = await glob(sourceFileGlob)
     } else {
-        filenames = await thumbnails({ sourcePath, destDir, count, dimensions })
+        filenames = await thumbnails({ sourcePath, destDir, count, dimensions, sampleTime })
     }
     const sourceFileGlob = `${destDir}/thumb*.png`
 
-    const thumbstripDir = destDir.replace(/\/thumbnails/g,'')
+    const thumbstripDir = destDir.replace(/\/thumbnails/g, "")
     await montage({
         columns,
         sourceFileGlob,

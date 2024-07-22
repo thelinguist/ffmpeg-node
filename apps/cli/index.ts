@@ -41,7 +41,11 @@ program.command("dash").description("do a dash conversion").action(createDash)
 program.command("mp4").description("do an mp4 conversion").action(createMp4)
 program.command("vp9").description("do an vp9 conversion").action(createVP9)
 program.command("h265").description("do an h265 conversion").action(createH265)
-program.command("thumbstrip").description("generate thumbnails and a thumbstrip for web player previews").action(createThumbStrip)
+program
+    .command("thumbstrip")
+    .description("generate thumbnails and a thumbstrip for web player previews")
+    .option("-x --skip-thumbnails", "skip creating the thumbnails in case they already exist")
+    .action(createThumbStrip)
 program
     .command("all")
     .description("do all the conversions!")

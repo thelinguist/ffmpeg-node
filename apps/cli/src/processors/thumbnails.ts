@@ -6,6 +6,7 @@ interface Params {
     destDir: string
     count: number
     dimensions?: string
+    sampleTime?: number
 }
 
 /**
@@ -16,23 +17,28 @@ interface Params {
  * @param resolution
  * @param count
  * @param dimensions string
+ * @params sampleTime number
  */
 
-export const thumbnails = async ({ sourcePath, destDir, count, dimensions }: Params): Promise<string[]> => {
+export const thumbnails = async ({ sourcePath, destDir, count, dimensions, sampleTime }: Params): Promise<string[]> => {
     let filenames: string[]
     const command = Ffmpeg(sourcePath)
         .screenshots({
             folder: destDir,
-            filename: "thumb%s.png",
+            filename: "thumb%000i-%s.png",
             count,
             size: dimensions,
         })
-        .on("filenames", function (newFilenames) {
+        .on("filenames", function(newFilenames) {
             filenames = newFilenames
         })
-        .output(`${destDir}/thumb%s.png`)
+        .output(`${destDir}/thumb%000i-%s.png`)
+    if (sampleTime) {
+        command.setStartTime(10).duration(sampleTime)
+    }
+    // TODO if indexOf error, thta's because fluent-ffmpeg cant handle the `%i` properly. It did finish though
     await executeAndWatch(command)
-    await removeFile(`${destDir}/thumb%s.png`)
+    await removeFile(`${destDir}/thumb%000i-%s.png`)
     return filenames!
 }
 
