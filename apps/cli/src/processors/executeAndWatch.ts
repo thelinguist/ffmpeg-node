@@ -3,13 +3,15 @@ import { FfmpegCommand } from "fluent-ffmpeg"
 
 export const executeAndWatch = (command: FfmpegCommand) => {
     return new Promise((resolve, reject) => {
+        let error
         command.addListener("progress", (event: ProgressEvent) => {
-            console.clear()
+            !error && console.clear()
             console.log(
                 `frames: ${event.frames}, currentFPS: ${event.currentFps}. progress: ${event.percent}`
             )
         })
         command.on("error", function (err, stdout, stderr) {
+            error = true
             console.error(err)
             console.error(stdout)
             console.error(stderr)
